@@ -1,5 +1,4 @@
 # changes
-
 * Merge Pull Request https://github.com/box/spout/pull/866
 * Merge Pull Request https://github.com/box/spout/pull/874
 
