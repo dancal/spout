@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Dancal\\Spout\\": "src/Spout"
+            "Box\\Spout\\": "src/Spout"
         }
     },
     "extra": {
