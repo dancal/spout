@@ -1,3 +1,8 @@
+# changes
+
+* Merge Pull Request https://github.com/box/spout/pull/866
+* Merge Pull Request https://github.com/box/spout/pull/874
+
 # Spout
 
 [![Latest Stable Version](https://poser.pugx.org/box/spout/v/stable)](https://packagist.org/packages/box/spout)

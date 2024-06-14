@@ -1,7 +1,16 @@
 {
     "name": "dancal/spout",
     "description": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way",
-    "type": "composer-plugin",
+	"type": "library",
+    "keywords": ["php","read","write","csv","xlsx","ods","odf","open","office","excel","spreadsheet","scale","memory","stream","ooxml"],
+    "license": "Apache-2.0",
+    "homepage": "https://www.github.com/dancal/spout",
+    "authors": [
+        {
+            "name": "Adrien Loison",
+            "email": "adrien@box.com"
+        }
+    ],
     "require": {
         "php": ">=7.3.0",
         "ext-zip": "*",
@@ -13,13 +22,6 @@
         "friendsofphp/php-cs-fixer": "^3",
         "phpstan/phpstan": "^1"
     },
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "dancal",
-            "email": "dancal@adforus.co.kr"
-        }
-    ],
     "suggest": {
         "ext-iconv": "To handle non UTF-8 CSV files (if \"php-intl\" is not already installed or is too limited)",
         "ext-intl": "To handle non UTF-8 CSV files (if \"iconv\" is not already installed)"
@@ -31,7 +33,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.1.x-dev"
+            "dev-master": "dev-master"
         }
     },
     "config": {
