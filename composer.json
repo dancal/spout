@@ -5,7 +5,7 @@
     "require": {
         "php": "7.4.0"
     },
-    "license": "Apache License, Version 2.0",
+    "license": "Apache-2.0",
     "autoload": {
         "psr-4": {
             "Dancal\\Spout\\": "src/"
