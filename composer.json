@@ -3,7 +3,7 @@
     "description": "PHP Library to read and write spreadsheet files (CSV, XLSX and ODS), in a fast and scalable way",
     "type": "composer-plugin",
     "require": {
-        "php": "7.4.0"
+        "php": ">=7.3.0"
     },
     "license": "Apache-2.0",
     "autoload": {
