@@ -22,13 +22,13 @@ class Worksheet
 
     /** @var int Index of the last written row */
     private $lastWrittenRowIndex;
-    
+
     /** @var array Array of the column widths */
     protected $columnWidths;
-    
+
     /** @var int Width calculation style */
     protected $widthCalcuationStyle;
-    
+
     /** @var int Fixed sheet width for fixed width calculation style */
     protected $fixedSheetWidth;
 
@@ -116,6 +116,7 @@ class Worksheet
         }
 
         $this->columnWidths[$zeroBasedIndex] = self::DEFAULT_COL_WIDTH;
+
         return $this->columnWidths[$zeroBasedIndex];
     }
 
@@ -142,7 +143,7 @@ class Worksheet
      */
     public function autoSetWidth($cell, $style, $zeroBasedIndex)
     {
-        $size = 1 + mb_strlen($cell->getValue());//ensure we have at least 1 space
+        $size = 1 + mb_strlen($cell->getValue()); //ensure we have at least 1 space
         $size *= $style->isFontBold() ? 1.2 : 1.0;
         $this->setMaxColumnWidth($zeroBasedIndex, $size);
     }
@@ -156,6 +157,7 @@ class Worksheet
         if (!$this->fixedSheetWidth) {
             return Worksheet::DEFAULT_FIXED_WIDTH;
         }
+
         return $this->fixedSheetWidth;
     }
 
@@ -181,11 +183,13 @@ class Worksheet
      * Set the with calculation style for this sheet.
      * 1=FullExpand,2=FixedWidth,0=None
      *
+     * @param mixed $widthStyle
      * @return Worksheet Enable method chaining for easy set width
      */
     public function setWidthCalculation($widthStyle)
     {
         $this->widthCalcuationStyle = $widthStyle;
+
         return $this;
     }
 

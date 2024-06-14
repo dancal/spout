@@ -10,7 +10,6 @@ use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Common\Helper\Escaper\ODS as ODSEscaper;
 use Box\Spout\Common\Helper\StringHelper;
 use Box\Spout\Common\Manager\OptionsManagerInterface;
-use Box\Spout\Writer\Common\Helper\AppendHelper;
 use Box\Spout\Writer\Common\Entity\Options;
 use Box\Spout\Writer\Common\Entity\Worksheet;
 use Box\Spout\Writer\Common\Manager\RegisteredStyle;
@@ -83,7 +82,7 @@ class WorksheetManager implements WorksheetManagerInterface
 
         $worksheet->setWidthCalculation($this->widthCalcuationStyle);
         $worksheet->setFixedSheetWidth($this->fixedWidth);
-        if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {
+        if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
             $this->headWritePosition = ftell($sheetFilePointer);
         }
 
@@ -118,10 +117,10 @@ class WorksheetManager implements WorksheetManagerInterface
 
         $tableElement = '<table:table table:style-name="' . $tableStyleName . '" table:name="' . $escapedSheetName . '">';
 
-        if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {
-            foreach ($worksheet->getColumnWidths() as $i => $w){
+        if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
+            foreach ($worksheet->getColumnWidths() as $i => $w) {
                 $colNo = $i + 1;
-                $tableElement .= '<table:table-column table:default-cell-style-name="ce1" table:style-name="co'.$colNo.'"/>';
+                $tableElement .= '<table:table-column table:default-cell-style-name="ce1" table:style-name="co' . $colNo . '"/>';
             }
         } else {
             $tableElement .= '<table:table-column table:default-cell-style-name="ce1" table:style-name="co1" table:number-columns-repeated="' . $worksheet->getMaxNumColumns() . '"/>';
@@ -155,7 +154,7 @@ class WorksheetManager implements WorksheetManagerInterface
             /** @var Cell|null $nextCell */
             $nextCell = isset($cells[$nextCellIndex]) ? $cells[$nextCellIndex] : null;
 
-            if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {
+            if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
                 $worksheet->autoSetWidth($cell, $rowStyle, $i);
             }
 
@@ -290,33 +289,35 @@ class WorksheetManager implements WorksheetManagerInterface
      */
     public function getWidthStylesContent($worksheet)
     {
-        if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {            
+        if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
             //create the col styles
             $style = '';
             $widths = $worksheet->getColumnWidths();
             //todo: this may not be adequate for multiple worksheets
 
             //re-calculate width for fixed sets
-            if ($worksheet->getWidthCalculation() == Worksheet::W_FIXED) {
+            if ($worksheet->getWidthCalculation() === Worksheet::W_FIXED) {
                 $total = array_sum($widths);
-                foreach($widths as $i => $w) {
+                foreach ($widths as $i => $w) {
                     $wr = ($w / $total) * $worksheet->getFixedSheetWidth();
                     $widths[$i] = $wr;
                 }
             }
-            
-            foreach ($widths as $i => $width){
+
+            foreach ($widths as $i => $width) {
                 //this is a rough equivalent based on pixel density,
-                $win = round($width / 9.6, 2);//convert to inches
+                $win = round($width / 9.6, 2); //convert to inches
                 $colNo = $i + 1;
-                $style .= '<style:style style:name="co'.$colNo.
-                '" style:family="table-column"><style:table-column-properties fo:break-before="auto" style:column-width="'.
-                $win.
+                $style .= '<style:style style:name="co' . $colNo .
+                '" style:family="table-column"><style:table-column-properties fo:break-before="auto" style:column-width="' .
+                $win .
                 'in"/></style:style>';
             }
+
             return $style;
         }
-        return "";
+
+        return '';
     }
 
     /**

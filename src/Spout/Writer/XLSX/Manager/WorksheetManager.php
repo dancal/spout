@@ -9,10 +9,10 @@ use Box\Spout\Common\Exception\InvalidArgumentException;
 use Box\Spout\Common\Exception\IOException;
 use Box\Spout\Common\Helper\Escaper\XLSX as XLSXEscaper;
 use Box\Spout\Common\Helper\StringHelper;
-use Box\Spout\Writer\Common\Helper\AppendHelper;
 use Box\Spout\Common\Manager\OptionsManagerInterface;
 use Box\Spout\Writer\Common\Entity\Options;
 use Box\Spout\Writer\Common\Entity\Worksheet;
+use Box\Spout\Writer\Common\Helper\AppendHelper;
 use Box\Spout\Writer\Common\Helper\CellHelper;
 use Box\Spout\Writer\Common\Manager\RegisteredStyle;
 use Box\Spout\Writer\Common\Manager\RowManager;
@@ -120,16 +120,16 @@ EOD;
         $worksheet->setFilePointer($sheetFilePointer);
         $worksheet->setWidthCalculation($this->widthCalcuationStyle);
         $worksheet->setFixedSheetWidth($this->fixedWidth);
-        
+
         \fwrite($sheetFilePointer, self::SHEET_XML_FILE_HEADER);
-        if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {
+        if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
             $this->headWritePosition = ftell($sheetFilePointer);
         }
         //width calculation style 3 with empty spaces.. not suitable if column sizes more than 40
-        if ($worksheet->getWidthCalculation() == Worksheet::W_FULL_ALT) {
+        if ($worksheet->getWidthCalculation() === Worksheet::W_FULL_ALT) {
             //insert dummy nodes for up to 40 columns
             for ($i = 0; $i < 40; $i++) {
-                $dummy = "                                                                             ";
+                $dummy = '                                                                             ';
                 \fwrite($sheetFilePointer, $dummy);
             }
         }
@@ -187,7 +187,7 @@ EOD;
                 $rowStyle = $cellStyle; // Replace actual rowStyle (possibly with null id) by registered style (with id)
             }
 
-            if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {
+            if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
                 //use row style to maintain a fair average based width computation for now
                 $worksheet->autoSetWidth($cell, $rowStyle, $columnIndexZeroBased);
             }
@@ -321,25 +321,25 @@ EOD;
 
         \fwrite($worksheetFilePointer, '</sheetData>');
 
-        if ($worksheet->getWidthCalculation() != Worksheet::W_NONE) {
+        if ($worksheet->getWidthCalculation() !== Worksheet::W_NONE) {
             $colNode ='<cols>';
             $widths = $worksheet->getColumnWidths();
 
             //re-calculate width for fixed sets
-            if ($worksheet->getWidthCalculation() == Worksheet::W_FIXED) {
+            if ($worksheet->getWidthCalculation() === Worksheet::W_FIXED) {
                 $total = array_sum($widths);
-                foreach($widths as $i => $w) {
+                foreach ($widths as $i => $w) {
                     $wr = ($w / $total) * $worksheet->getFixedSheetWidth();
                     $widths[$i] = $wr;
                 }
             }
 
-            foreach ($widths as $i => $width){
+            foreach ($widths as $i => $width) {
                 $colAffect = $i + 1;
-                $colNode .= '<col hidden="false" collapsed="false" min="'.$colAffect.'" max="'.$colAffect.'" width="'.$width.'" customWidth="true"/>';
+                $colNode .= '<col hidden="false" collapsed="false" min="' . $colAffect . '" max="' . $colAffect . '" width="' . $width . '" customWidth="true"/>';
             }
             $colNode .= '</cols>';
-            if ($worksheet->getWidthCalculation() == Worksheet::W_FULL_ALT) {
+            if ($worksheet->getWidthCalculation() === Worksheet::W_FULL_ALT) {
                 $worksheetFilePointer = AppendHelper::overwriteToFile($worksheetFilePointer, $this->headWritePosition, $colNode);
             } else {
                 $worksheetFilePointer = AppendHelper::insertToFile($worksheetFilePointer, $this->headWritePosition, $colNode);

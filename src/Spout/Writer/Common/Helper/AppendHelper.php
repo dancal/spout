@@ -2,18 +2,21 @@
 
 namespace Box\Spout\Writer\Common\Helper;
 
-class AppendHelper {
-
+class AppendHelper
+{
     /**
      * Instead of seeking and re-writing from position, a better hack might be to write dummy empty data
      * Enough to take care of any length, then carefully overwrite
-     * 
+     *
+     * @param mixed $fp
+     * @param mixed $pos
+     * @param mixed $content
      */
 
     /**
      * This function will truncate from specified position
      * Write data to be inserted and re-append the truncated data
-     *  
+     *
      * @param $fp Pointer to file only
      * @param $pos Position to insert
      * @param $content Content to insert
@@ -26,12 +29,13 @@ class AppendHelper {
         fseek($fp, $pos);
         fwrite($fp, $content);
         fwrite($fp, $trailer);
+
         return $fp;
     }
 
     /**
      * This function overwrite data in pointer from specified position
-     *  
+     *
      * @param $fp Pointer to file only
      * @param $pos Position to insert
      * @param $content Content to insert
@@ -42,7 +46,7 @@ class AppendHelper {
         fseek($fp, $pos);
         fwrite($fp, $content);
         fseek($fp, $cur);
+
         return $fp;
     }
-
 }

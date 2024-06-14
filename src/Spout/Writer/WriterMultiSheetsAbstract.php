@@ -26,7 +26,7 @@ abstract class WriterMultiSheetsAbstract extends WriterAbstract
 
     /** @var WorkbookManagerInterface|null */
     private $workbookManager;
-        
+
     /** @var int Width calculation style */
     protected $widthCalcuationStyle;
 
